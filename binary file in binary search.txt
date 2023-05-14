@@ -1,0 +1,46 @@
+#include<stdio.h>
+unsigned char data[ 1024 * 1024 * 48 ];
+unisnged char name[1024 * 1024 * 9 ];
+int main()
+{
+int count = 0;
+int len;
+int start = 0;
+int len2;
+File *fp1;
+File *fp = fopen("read.txt","rb");
+fseek( fp,0,SEEK_END  );
+len = ftell(fp);
+rewind(fp);
+fread( &data[0],1,len,fp);
+
+fp1 = fopen("name.txt","rb");
+fseek(fp1,0,SEEK_END);
+len2 = ftell(fp1);
+rewind(fp1);
+fread( &name[0],1,len,fp1);
+
+for(int i = 0; i< len; i++)
+{
+if(   name[start] == '\0'  )
+{
+count++;
+start = 0;
+}
+
+if(   data[i] == name[start]  )
+{
+start++;
+}else{
+start = 0;
+}
+}
+
+fclose(fp);
+fclose(fp1);
+
+printf("%d",start);
+
+//binary search and count
+
+}
